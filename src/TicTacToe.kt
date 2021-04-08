@@ -2,7 +2,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 object TicTacToe {
-    var game : Game?=null
+
+    var game: Game? = null
     var count = 0
     var user_input: String? = null
     private var gameMode = 0
@@ -33,7 +34,6 @@ object TicTacToe {
             ) {
                 valid_input = true
             } else {
-
                 user_input = getInput("\n\tYou must enter a number between $minimumGameSize and $maximumGameSize: ")
             }
         }
@@ -82,20 +82,14 @@ object TicTacToe {
         }
 
         //output an ending message to the game
-        if (game!!.draw) {
-            println("\n\tCat's game!")
-        } else {
-
-            //count variable from earlier is used to decide who went last and therefore won.
-            if (count % 2 == 1) {
-                println("\n\tX's win!")
-            } else {
-                println("\n\tO's win!")
-            }
+        //count variable from earlier is used to decide who went last and therefore won.
+        if (game!!.draw) println("\n\tCat's game!") else {
+            if (count % 2 == 1) println("\n\tX's win!") else println("\n\tO's win!")
         }
     }
 
     //encapsulated code for input stream buffer
+
     fun getInput(prompt: String): String {
         val stdin = BufferedReader(InputStreamReader(System.`in`))
         print(prompt)
@@ -113,14 +107,14 @@ object TicTacToe {
         valid_input = false
         while (!valid_input) {
             if (user_input!!.length == 1 && user_input.substring(0, 1).matches(("[1-2]").toRegex())) {
-                    valid_input = true
-                }else {
-                    user_input = getInput("\n\tYou must enter '1' or '2' for the game mode: ")
-                }
-                }
+                valid_input = true
+            } else {
+                user_input = getInput("\n\tYou must enter '1' or '2' for the game mode: ")
+            }
+        }
 
 
         //Set user input to gameMode for use later
-        gameMode= user_input!!.toInt()
+        gameMode = user_input!!.toInt()
     }
 }
