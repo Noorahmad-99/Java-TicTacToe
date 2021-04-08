@@ -21,12 +21,12 @@ class Player     //constructor.  requires string to set player type
 
             //let user know that AI is going
             print("\tThe computer will now make a move..")
-            delay(1000, TicTacToe.game.gridSize) //take a second to go to make it appear as if computer is thinking
+            delay(1000, TicTacToe.game!!.gridSize) //take a second to go to make it appear as if computer is thinking
             while (turn) {
                 //AI selects a random empty cell and places corrosponding mark
-                index = Math.round((TicTacToe.game.gridSize * TicTacToe.game.gridSize - 1) * Math.random())
+                index = Math.round((TicTacToe.game!!.gridSize * TicTacToe.game!!.gridSize - 1) * Math.random())
                     .toInt()
-                move(index, TicTacToe.game)
+                move(index, TicTacToe.game!!)
             }
         } else {
             //if human, do human stuff
@@ -37,23 +37,23 @@ class Player     //constructor.  requires string to set player type
             while (turn) {
 
                 //validate user input
-                if (valid_input(TicTacToe.user_input)) {
-                    if (TicTacToe.user_input.length == 2) {
-                        column = TicTacToe.user_input.substring(0, 1).toInt()
-                        row = letterToNumber(TicTacToe.user_input.substring(1, 2))
+                if (valid_input(TicTacToe.user_input!!)) {
+                    if (TicTacToe.user_input!!.length == 2) {
+                        column = TicTacToe.user_input!!.substring(0, 1).toInt()
+                        row = letterToNumber(TicTacToe.user_input!!.substring(1, 2))
                     } else {
-                        column = TicTacToe.user_input.substring(0, 2).toInt()
-                        row = letterToNumber(TicTacToe.user_input.substring(2, 3))
+                        column = TicTacToe.user_input!!.substring(0, 2).toInt()
+                        row = letterToNumber(TicTacToe.user_input!!.substring(2, 3))
                     }
-                    index = TicTacToe.game.gridSize * (row - 1) + (column - 1)
-                    if (index > TicTacToe.game.gridSize * TicTacToe.game.gridSize - 1 || index < 0) {
+                    index = TicTacToe.game!!.gridSize * (row - 1) + (column - 1)
+                    if (index > TicTacToe.game!!.gridSize * TicTacToe.game!!.gridSize - 1 || index < 0) {
                         TicTacToe.user_input =
                             TicTacToe.getInput("That's not a valid spot!  Please choose another spot: ")
                     } else {
 
                         //if valid input, and cell isn't taken already,
                         //place mark in selected cell and end turn
-                        move(index, TicTacToe.game)
+                        move(index, TicTacToe.game!!)
                         if (turn) {
                             TicTacToe.user_input =
                                 TicTacToe.getInput("That space is already in play!  Please choose another spot: ")
@@ -68,7 +68,7 @@ class Player     //constructor.  requires string to set player type
 
     //player places mark
     private fun move(index: Int, game: Game) {
-        if (TicTacToe.game.setCell(index)) {
+        if (TicTacToe.game!!.setCell(index)) {
             turn = false
         }
     }
@@ -81,11 +81,11 @@ class Player     //constructor.  requires string to set player type
         private fun valid_input(user_input: String): Boolean {
             var output = false
             if (user_input.length == 2) {
-                output = user_input.substring(0, 1).contains("[0-9]") && user_input.substring(1, 2).contains("[a-zA-Z]")
+                output = user_input.substring(0, 1).matches(("[0-9]").toRegex()) && user_input.substring(1, 2).matches(("[a-zA-Z]").toRegex())
             } else if (user_input.length == 3) {
                 output =
-                    user_input.substring(0, 2).contains("[1-2][0-9]") && user_input.substring(2, 3).contains("[a-zA-Z]")
-                if (user_input.substring(0, 2).toInt() > TicTacToe.game.gridSize) {
+                    user_input.substring(0, 2).matches(("[1-2][0-9]").toRegex()) && user_input.substring(2, 3).matches(("[a-zA-Z]").toRegex())
+                if (user_input.substring(0, 2).toInt() > TicTacToe.game!!.gridSize ) {
                     output = false
                 }
             }

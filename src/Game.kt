@@ -1,5 +1,3 @@
-
-
 class Game(var gridSize: Int) {
     //This is the Game class.  It hold the current state of the game
     //with the help of the Cell class.
@@ -182,10 +180,10 @@ class Game(var gridSize: Int) {
                     meat += " | " + grid[gridSize * (row - 1) + (i - 1)]!!.output()
                 }
             }
-            map += """
-                $meat
-                $fill
-                """.trimIndent()
+            map +="""
+              $meat
+                   $fill
+                   """.trimIndent()
         }
         return map
     }

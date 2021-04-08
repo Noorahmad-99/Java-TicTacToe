@@ -2,7 +2,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 object TicTacToe {
-    var game: Game? = null
+    var game : Game?=null
     var count = 0
     var user_input: String? = null
     private var gameMode = 0
@@ -26,13 +26,14 @@ object TicTacToe {
         user_input = getInput("\n\tPlease enter an integer between $minimumGameSize and $maximumGameSize: ")
 
         //validate user unput for game size
-        valid_input = false
+
         while (!valid_input) {
             if (user_input!!.length > 0 && user_input!!.substring(0, 1)
-                    .contains("[1-9]") && minimumGameSize <= user_input!!.toInt() && user_input!!.toInt() <= maximumGameSize
+                    .matches(("[1-9]").toRegex()) && minimumGameSize <= user_input!!.toInt() && user_input!!.toInt() <= maximumGameSize
             ) {
                 valid_input = true
             } else {
+
                 user_input = getInput("\n\tYou must enter a number between $minimumGameSize and $maximumGameSize: ")
             }
         }
@@ -69,7 +70,7 @@ object TicTacToe {
                 player!!.go()
                 println(
                     """
-    
+                    
     ${game!!.output()}
     """.trimIndent()
                 )
@@ -95,7 +96,7 @@ object TicTacToe {
     }
 
     //encapsulated code for input stream buffer
-    fun getInput(prompt: String?): String {
+    fun getInput(prompt: String): String {
         val stdin = BufferedReader(InputStreamReader(System.`in`))
         print(prompt)
         System.out.flush()
@@ -111,14 +112,15 @@ object TicTacToe {
         var user_input = user_input
         valid_input = false
         while (!valid_input) {
-            if (user_input!!.length == 1 && user_input.substring(0, 1).contains("[1-2]")) {
-                valid_input = true
-            } else {
-                user_input = getInput("\n\tYou must enter '1' or '2' for the game mode: ")
-            }
-        }
+            if (user_input!!.length == 1 && user_input.substring(0, 1).matches(("[1-2]").toRegex())) {
+                    valid_input = true
+                }else {
+                    user_input = getInput("\n\tYou must enter '1' or '2' for the game mode: ")
+                }
+                }
+
 
         //Set user input to gameMode for use later
-        gameMode = user_input!!.toInt()
+        gameMode= user_input!!.toInt()
     }
 }
