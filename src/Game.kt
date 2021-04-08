@@ -1,28 +1,22 @@
 class Game(var gridSize: Int) {
-    //This is the Game class.  It hold the current state of the game
-    //with the help of the Cell class.
-    @JvmField
-    var finished = false
-    @JvmField
+    /*This is the Game class.  It hold the current state of the game*/
+    /*with the help of the Cell class.*/
+    var finished: Boolean = false
     var draw = false
     private val grid: Array<Cell?>
-
-    //checks to see if a win condition has been met and
-    //outputs the current game map to the console 
     fun output(): String {
         checkForTicTacToe()
         return drawMap()
     }
 
     //places an X or an O in a cell ont he game map
-    fun setCell(index: Int): Boolean {
-        return if (grid[index]!!.empty) {
-            grid[index]!!.placeMark()
-            true
-        } else {
+    fun setCell(index: Int): Boolean =
+         if (grid[index]!!.empty) {
+             grid[index]!!.placeMark()
+             true
+         }
+         else
             false
-        }
-    }
 
     //checks to see if a win condition has been met
     private fun checkForTicTacToe(): Boolean {
@@ -32,15 +26,11 @@ class Game(var gridSize: Int) {
         var diagonalWin: Boolean
         val rows = Array(gridSize) { arrayOfNulls<Cell>(gridSize) }
         val columns = Array(gridSize) { arrayOfNulls<Cell>(gridSize) }
-        val diagonals =
-            Array(2) { arrayOfNulls<Cell>(gridSize) } //there are only ever two diagonals which complete a tictactoe in a square
-
+        val diagonals = Array(2) { arrayOfNulls<Cell>(gridSize) }
         //if every cell is filled, end the game
         gridFilled = true
         for (i in 0 until gridSize * gridSize) {
-            if (grid[i]!!.empty) {
-                gridFilled = false
-            }
+            if (grid[i]!!.empty) gridFilled = false
         }
         if (gridFilled) {
             finished = true
@@ -181,9 +171,9 @@ class Game(var gridSize: Int) {
                 }
             }
             map +="""
-              $meat
-                   $fill
-                   """.trimIndent()
+                |$meat
+                |$fill
+                """.trimIndent()
         }
         return map
     }
@@ -191,8 +181,8 @@ class Game(var gridSize: Int) {
     //constructor.  takes integer and generates a new Game with given size
     init {
         grid = arrayOfNulls(gridSize * gridSize)
-        for (i in grid.indices) {
-            grid[i] = Cell()
-        }
+        for (i in grid.indices)
+            grid[i]=Cell()
+
     }
 }

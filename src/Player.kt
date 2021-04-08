@@ -1,24 +1,12 @@
-
 import java.lang.InterruptedException
-
-class Player     //constructor.  requires string to set player type
-    (  //player makes moves and can be human or AI
-    private val type // whether the player is human or AI
-    : String
-) {
+class Player (private val type: String) {
     private var index = 0
     private var column = 0
     private var row = 0
-    private var turn //whether or not it's the player's turn
-            = false
-
-    //player "goes" while it's their turn
+    private var turn : Boolean = false
     fun go() {
         turn = true
-
-        // if AI, do computery things
         if (type === "AI") {
-
             //let user know that AI is going
             print("\tThe computer will now make a move..")
             delay(1000, TicTacToe.game!!.gridSize) //take a second to go to make it appear as if computer is thinking
@@ -68,10 +56,10 @@ class Player     //constructor.  requires string to set player type
 
     //player places mark
     private fun move(index: Int, game: Game) {
-        if (TicTacToe.game!!.setCell(index)) {
-            turn = false
-        }
+        if(TicTacToe.game!!.setCell(index))
+            turn=false
     }
+
 
     companion object {
         //encapsulated code for user input validation
@@ -83,12 +71,8 @@ class Player     //constructor.  requires string to set player type
             if (user_input.length == 2) {
                 output = user_input.substring(0, 1).matches(("[0-9]").toRegex()) && user_input.substring(1, 2).matches(("[a-zA-Z]").toRegex())
             } else if (user_input.length == 3) {
-                output =
-                    user_input.substring(0, 2).matches(("[1-2][0-9]").toRegex()) && user_input.substring(2, 3).matches(("[a-zA-Z]").toRegex())
-                if (user_input.substring(0, 2).toInt() > TicTacToe.game!!.gridSize ) {
-                    output = false
-                }
-            }
+                output = user_input.substring(0, 2).matches(("[1-2][0-9]").toRegex()) && user_input.substring(2, 3).matches(("[a-zA-Z]").toRegex())
+                if (user_input.substring(0, 2).toInt() > TicTacToe.game!!.gridSize ) output = false }
             return output
         }
 
@@ -99,11 +83,11 @@ class Player     //constructor.  requires string to set player type
             } catch (ex: InterruptedException) {
                 Thread.currentThread().interrupt()
             }
+
         }
 
         //converts the letter input for row/column selection into a usable number
-        private fun letterToNumber(str: String): Int {
-            return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".indexOf(str) % 26 + 1
-        }
+        private fun letterToNumber(str: String): Int = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".indexOf(str) % 26 + 1)
+
     }
 }
